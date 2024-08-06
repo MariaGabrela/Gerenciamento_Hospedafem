@@ -55,30 +55,43 @@ body{
 }
 
 /*funcionario*/
-.menu{
-    margin: 0;
-    padding: 0;
-    padding: 25px;
-    font-size: 20px;
-    background-color:rgba(240, 248, 255, 0.895);
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 25px; 
+    background-color: rgba(255, 255, 255, 0.842); 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
     position: relative;
     z-index: 2;
-    text-align:right;
-    padding-right: 25px;
-    border-radius: 2px;
+    margin: 0 auto;
 }
 
-.menu a{
-    display: inline-block;
-    text-decoration: none;
-    color: black;
+.menu button {
+    background-color: #ff6600de;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
-.funcionario{
-    margin-right: 40px;
-    font-size: 22.5px;
+
+.menu button:hover {
+    background-color: #ff8800ee;
+    transform: scale(1.05);
+    color:#ffffff
 }
-.funcionario:hover{
-    color: rgb(221, 147, 28);
+
+.menu button:focus {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+#loginBtn {
+    padding: 13px 20px; 
+ 
 }
 .login{
     background-color: rgba(255, 68, 0, 0.814);
@@ -393,5 +406,7 @@ body{
     font-size: 23px;
 }
 
-
+.reserva{
+    cursor: pointer;
+}
 
