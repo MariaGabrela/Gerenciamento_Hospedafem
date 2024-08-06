@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Reservas</title>
+    <style>
+        /* Estilo do calendário */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            width: 14.28%;
+            height: 50px;
+            text-align: center;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .selecionado {
+            background-color: #add8e6;
+        }
+        .mes_anterior, .proximo_mes {
+            color: #bbb;
+        }
+        .dia_atual {
+            background-color: #ffa;
+            font-weight: bold;
+        }
+        #confirmButton {
+            margin-top: 20px;
+        }
+        #reservationModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #reservationModal .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendário de Reservas</h1>
+
+    <div id="calendario">
+        <button id="bnt_ant">&#60;</button>
+        <span id="mes"></span> <span id="ano"></span>
+        <button id="bnt_pro">&gt;</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+                </tr>
+            </thead>
+            <tbody id="dias"></tbody>
+        </table>
+    </div>
+
+    <div id="mensagemSelecao" style="display: none;">
+        <p id="mensagemTexto"></p>
+    </div>
+
+    <button id="reserveButton">Fazer Reserva</button>
+
+    <div id="reservationModal">
+        <span class="close" id="closeButton">&times;</span>
+        <h2>Detalhes da Reserva</h2>
+        <label for="adults">Adultos:</label>
+        <input type="number" id="adults" value="1" min="1"><br>
+        <label for="children">Crianças:</label>
+        <input type="number" id="children" value="0" min="0"><br>
+        <label for="rooms">Quartos:</label>
+        <input type="number" id="rooms" value="1" min="1"><br>
+        <button id="confirmButton">Confirmar</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
