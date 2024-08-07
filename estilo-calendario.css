@@ -53,6 +53,7 @@ h1{
 
 .bnt_ant,.bnt_pro{
     position: absolute;
+    background-color: #000000;
     top: 50%;
     height: 32px;
     width: 32px;
@@ -63,6 +64,7 @@ h1{
     color: #cbd1dc;
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .bnt_ant:hover,.bnt_pro:hover{
@@ -79,27 +81,59 @@ th, td {
     height: 50px;
     text-align: center;
     border: 1px solid #ddd;
+    border: none;
 }
 td {
+
     cursor: pointer;
 }
-.mes_anterior {
-    color: #bbb;
+
+.calendario table{
+    margin-top: 20px;
+    border-collapse:collapse;/*fazem celulas adjacentes usarem a mesma borda*/
+    color: white;
+}
+.calendario thead{
+    color: red;
+    background-color: rgb(0, 0, 0);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.calendario td{
+    border-radius: 100px;
+    font-size: 15px;
+    height: 71.4px;
+    text-align: center;
+    width: 71.4px;
+    border: none;
+}
+.calendario tbody td{
+    cursor: pointer;/*ao passar pelas linhas o cursor vira uma maozinha*/
+}
+.calendario tbody td:hover{
+    background: rgba(223, 78, 0, 0.8);
+    color: #f9f9f9;
+}
+.calendario 
+.calendario table .dia_atual{
+    background: #00afdf83;
+    color: #f9f9f9;
 }
 .disponivel {
-    background-color: #fff;
+    background-color: #000000;
 }
 .selecionado_inicial {
-    background-color: #90ee90; /* Verde claro para check-in */
+    background-color: #e67a00; /* Verde claro para check-in */
 }
-.selecionado_final {
-    background-color: #add8e6; /* Azul claro para check-out */
-}
+
 .selecionado_intervalo {
-    background-color: #d3d3d3; /* Cinza claro para intervalo */
+    background-color: #fd5316c7; /* Cinza claro para intervalo */
 }
 #info {
     margin-top: 20px;
+    color: white;
+    font-size: large;
 }
 .calendario{
     left: 50%;
@@ -107,3 +141,16 @@ td {
     position: absolute;
     width: 500px;
 }
+
+.botao {
+    padding: 20px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 40px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    font-size: large;
+}
+
