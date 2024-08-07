@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+ <!--começo do codigo nao esta funcionando, tem so o html-->
+ <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +9,7 @@
     <script src="java.js"></script>
 </head>
 <body>
+   
     <h1 class="reservar">Selecione sua data de entrada e saída:</h1>
     <div class="conteudo">
         <div class="calendario">
@@ -96,7 +98,7 @@
         </div>
     </div>
 
-     <div id="reservationModal" class="modal">
+    <div id="reservationModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeButton">&times;</span>
             <h2>Detalhes da Reserva</h2>
@@ -116,3 +118,226 @@
     </div>
 </body>
 </html>
+
+
+
+<!-- termino do codigo que nao funciona-->
+
+
+
+<!--começo do codigo que esta funcionando-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Seleção</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            width: 14.28%;
+            height: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        td {
+            cursor: pointer;
+        }
+        .mes_anterior {
+            color: #bbb;
+        }
+        .disponivel {
+            background-color: #fff;
+        }
+        .selecionado_inicial {
+            background-color: #90ee90; /* Verde claro para check-in */
+        }
+        .selecionado_final {
+            background-color: #add8e6; /* Azul claro para check-out */
+        }
+        .selecionado_intervalo {
+            background-color: #d3d3d3; /* Cinza claro para intervalo */
+        }
+        #info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendário de Seleção</h1>
+
+    <div id="calendario">
+        <button id="bnt_ant">&#60;</button>
+        <span id="mes"></span> <span id="ano"></span>
+        <button id="bnt_pro">&gt;</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+                </tr>
+            </thead>
+            <tbody id="dias"></tbody>
+        </table>
+    </div>
+
+    <button id="confirmar">Confirmar Seleção</button>
+    
+    <div id="info">
+        <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
+        <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
+    </div>
+
+    <script>
+        let data = new Date();
+        let mesAtual = data.getMonth();
+        let anoAtual = data.getFullYear();
+        let checkIn = null;
+        let checkOut = null;
+        let checkInDate = null;
+
+        const diasElemento = document.getElementById('dias');
+        const mesElemento = document.getElementById('mes');
+        const anoElemento = document.getElementById('ano');
+        const confirmarButton = document.getElementById('confirmar');
+        const diaSelecionadoElemento = document.getElementById('diaSelecionado');
+        const diaFinalSelecionadoElemento = document.getElementById('diaFinalSelecionado');
+
+        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+        document.getElementById('bnt_ant').addEventListener('click', () => {
+            mesAtual = (mesAtual - 1 + 12) % 12;
+            if (mesAtual === 11) {
+                anoAtual--;
+            }
+            carregarCalendario();
+        });
+
+        document.getElementById('bnt_pro').addEventListener('click', () => {
+            mesAtual = (mesAtual + 1) % 12;
+            if (mesAtual === 0) {
+                anoAtual++;
+            }
+            carregarCalendario();
+        });
+
+        function carregarCalendario() {
+            diasElemento.innerHTML = '';
+            mesElemento.innerText = meses[mesAtual];
+            anoElemento.innerText = anoAtual;
+
+            const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+            const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
+            const diasAnteriores = primeiroDia;
+
+            const diasTotal = Math.ceil((diasAnteriores + ultimoDia) / 7) * 7;
+            const diasNoCalendario = Array(diasTotal).fill(null);
+
+            for (let i = 0; i < diasAnteriores; i++) {
+                diasNoCalendario[i] = '';
+            }
+            for (let dia = 1; dia <= ultimoDia; dia++) {
+                diasNoCalendario[diasAnteriores + dia - 1] = dia;
+            }
+
+            let tr = document.createElement('tr');
+            diasNoCalendario.forEach((dia, index) => {
+                if (index % 7 === 0 && index !== 0) {
+                    diasElemento.appendChild(tr);
+                    tr = document.createElement('tr');
+                }
+                const td = document.createElement('td');
+                if (dia) {
+                    td.innerText = dia;
+                    td.classList.add('disponivel');
+                    td.dataset.date = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                    td.addEventListener('click', () => selecionarDia(td, dia));
+                } else {
+                    td.classList.add('mes_anterior');
+                }
+                tr.appendChild(td);
+            });
+            diasElemento.appendChild(tr);
+
+            destacarSelecionado();
+        }
+
+        function selecionarDia(elemento, dia) {
+            const allDias = document.querySelectorAll('#dias td');
+            allDias.forEach(dia => dia.classList.remove('selecionado_inicial', 'selecionado_final', 'selecionado_intervalo'));
+
+            const dataSelecionada = new Date(anoAtual, mesAtual, dia);
+
+            if (checkIn === null || checkOut !== null) {
+                checkIn = dataSelecionada;
+                checkOut = null;
+                checkInDate = dataSelecionada;
+                elemento.classList.add('selecionado_inicial');
+                diaSelecionadoElemento.innerText = `Primeiro dia selecionado: ${checkIn.toLocaleDateString()}`;
+                diaFinalSelecionadoElemento.innerText = 'Segundo dia selecionado: Nenhum';
+            } else if (checkIn !== null && checkOut === null) {
+                if (dataSelecionada > checkIn) {
+                    checkOut = dataSelecionada;
+                    elemento.classList.add('selecionado_final');
+                    marcarIntervalo();
+                    diaFinalSelecionadoElemento.innerText = `Segundo dia selecionado: ${checkOut.toLocaleDateString()}`;
+                }
+            }
+        }
+
+        function marcarIntervalo() {
+            const allDias = document.querySelectorAll('#dias td');
+            let start = false;
+
+            allDias.forEach(dia => {
+                const diaNum = parseInt(dia.innerText);
+                const dataDia = new Date(anoAtual, mesAtual, diaNum);
+                if (diaNum && dataDia.getTime() === checkIn.getTime()) {
+                    start = true;
+                }
+                if (start) {
+                    dia.classList.add('selecionado_intervalo');
+                    if (diaNum && dataDia.getTime() === checkOut.getTime()) {
+                        start = false;
+                    }
+                }
+            });
+        }
+
+        function destacarSelecionado() {
+            const allDias = document.querySelectorAll('#dias td');
+            allDias.forEach(dia => {
+                if (dia.dataset.date) {
+                    const diaData = new Date(dia.dataset.date);
+                    if (checkIn && diaData.getTime() === checkIn.getTime()) {
+                        dia.classList.add('selecionado_inicial');
+                    }
+                    if (checkOut && diaData.getTime() === checkOut.getTime()) {
+                        dia.classList.add('selecionado_final');
+                    }
+                    if (checkIn && checkOut && diaData > checkIn && diaData < checkOut) {
+                        dia.classList.add('selecionado_intervalo');
+                    }
+                }
+            });
+        }
+
+        confirmarButton.addEventListener('click', () => {
+            if (checkIn !== null && checkOut !== null) {
+                alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
+                // Aqui você pode fazer o que desejar com as variáveis checkIn e checkOut
+            } else {
+                alert('Selecione duas datas distintas.');
+            }
+        });
+
+        carregarCalendario();
+    </script>
+</body>
+</html>
+
+
+<!--termino do codigo que esta funcionando, esta todo completo, com css, js, e html tudo junto, se quiser separar eles pode-->
+

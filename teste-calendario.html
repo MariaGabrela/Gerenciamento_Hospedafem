@@ -3,53 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendário de Reservas</title>
+    <title>Calendário de Seleção</title>
     <style>
-        /* Estilo do calendário */
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        td {
+        th, td {
             width: 14.28%;
             height: 50px;
             text-align: center;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
+        }
+        td {
             cursor: pointer;
         }
-        .selecionado {
-            background-color: #add8e6;
-        }
-        .mes_anterior, .proximo_mes {
+        .mes_anterior {
             color: #bbb;
         }
-        .dia_atual {
-            background-color: #ffa;
-            font-weight: bold;
+        .disponivel {
+            background-color: #fff;
         }
-        #confirmButton {
+        .selecionado_inicial {
+            background-color: #90ee90; /* Verde claro para check-in */
+        }
+        .selecionado_final {
+            background-color: #add8e6; /* Azul claro para check-out */
+        }
+        .selecionado_intervalo {
+            background-color: #d3d3d3; /* Cinza claro para intervalo */
+        }
+        #info {
             margin-top: 20px;
-        }
-        #reservationModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        #reservationModal .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Calendário de Reservas</h1>
+    <h1>Calendário de Seleção</h1>
 
     <div id="calendario">
         <button id="bnt_ant">&#60;</button>
@@ -65,24 +55,157 @@
         </table>
     </div>
 
-    <div id="mensagemSelecao" style="display: none;">
-        <p id="mensagemTexto"></p>
+    <button id="confirmar">Confirmar Seleção</button>
+    
+    <div id="info">
+        <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
+        <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
     </div>
 
-    <button id="reserveButton">Fazer Reserva</button>
+    <script>
+        let data = new Date();
+        let mesAtual = data.getMonth();
+        let anoAtual = data.getFullYear();
+        let checkIn = null;
+        let checkOut = null;
+        let checkInDate = null;
 
-    <div id="reservationModal">
-        <span class="close" id="closeButton">&times;</span>
-        <h2>Detalhes da Reserva</h2>
-        <label for="adults">Adultos:</label>
-        <input type="number" id="adults" value="1" min="1"><br>
-        <label for="children">Crianças:</label>
-        <input type="number" id="children" value="0" min="0"><br>
-        <label for="rooms">Quartos:</label>
-        <input type="number" id="rooms" value="1" min="1"><br>
-        <button id="confirmButton">Confirmar</button>
-    </div>
+        const diasElemento = document.getElementById('dias');
+        const mesElemento = document.getElementById('mes');
+        const anoElemento = document.getElementById('ano');
+        const confirmarButton = document.getElementById('confirmar');
+        const diaSelecionadoElemento = document.getElementById('diaSelecionado');
+        const diaFinalSelecionadoElemento = document.getElementById('diaFinalSelecionado');
 
-    <script src="script.js"></script>
+        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+        document.getElementById('bnt_ant').addEventListener('click', () => {
+            mesAtual = (mesAtual - 1 + 12) % 12;
+            if (mesAtual === 11) {
+                anoAtual--;
+            }
+            carregarCalendario();
+        });
+
+        document.getElementById('bnt_pro').addEventListener('click', () => {
+            mesAtual = (mesAtual + 1) % 12;
+            if (mesAtual === 0) {
+                anoAtual++;
+            }
+            carregarCalendario();
+        });
+
+        function carregarCalendario() {
+            diasElemento.innerHTML = '';
+            mesElemento.innerText = meses[mesAtual];
+            anoElemento.innerText = anoAtual;
+
+            const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+            const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
+            const diasAnteriores = primeiroDia;
+
+            const diasTotal = Math.ceil((diasAnteriores + ultimoDia) / 7) * 7;
+            const diasNoCalendario = Array(diasTotal).fill(null);
+
+            for (let i = 0; i < diasAnteriores; i++) {
+                diasNoCalendario[i] = '';
+            }
+            for (let dia = 1; dia <= ultimoDia; dia++) {
+                diasNoCalendario[diasAnteriores + dia - 1] = dia;
+            }
+
+            let tr = document.createElement('tr');
+            diasNoCalendario.forEach((dia, index) => {
+                if (index % 7 === 0 && index !== 0) {
+                    diasElemento.appendChild(tr);
+                    tr = document.createElement('tr');
+                }
+                const td = document.createElement('td');
+                if (dia) {
+                    td.innerText = dia;
+                    td.classList.add('disponivel');
+                    td.dataset.date = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+                    td.addEventListener('click', () => selecionarDia(td, dia));
+                } else {
+                    td.classList.add('mes_anterior');
+                }
+                tr.appendChild(td);
+            });
+            diasElemento.appendChild(tr);
+
+            destacarSelecionado();
+        }
+
+        function selecionarDia(elemento, dia) {
+            const allDias = document.querySelectorAll('#dias td');
+            allDias.forEach(dia => dia.classList.remove('selecionado_inicial', 'selecionado_final', 'selecionado_intervalo'));
+
+            const dataSelecionada = new Date(anoAtual, mesAtual, dia);
+
+            if (checkIn === null || checkOut !== null) {
+                checkIn = dataSelecionada;
+                checkOut = null;
+                checkInDate = dataSelecionada;
+                elemento.classList.add('selecionado_inicial');
+                diaSelecionadoElemento.innerText = `Primeiro dia selecionado: ${checkIn.toLocaleDateString()}`;
+                diaFinalSelecionadoElemento.innerText = 'Segundo dia selecionado: Nenhum';
+            } else if (checkIn !== null && checkOut === null) {
+                if (dataSelecionada > checkIn) {
+                    checkOut = dataSelecionada;
+                    elemento.classList.add('selecionado_final');
+                    marcarIntervalo();
+                    diaFinalSelecionadoElemento.innerText = `Segundo dia selecionado: ${checkOut.toLocaleDateString()}`;
+                }
+            }
+        }
+
+        function marcarIntervalo() {
+            const allDias = document.querySelectorAll('#dias td');
+            let start = false;
+
+            allDias.forEach(dia => {
+                const diaNum = parseInt(dia.innerText);
+                const dataDia = new Date(anoAtual, mesAtual, diaNum);
+                if (diaNum && dataDia.getTime() === checkIn.getTime()) {
+                    start = true;
+                }
+                if (start) {
+                    dia.classList.add('selecionado_intervalo');
+                    if (diaNum && dataDia.getTime() === checkOut.getTime()) {
+                        start = false;
+                    }
+                }
+            });
+        }
+
+        function destacarSelecionado() {
+            const allDias = document.querySelectorAll('#dias td');
+            allDias.forEach(dia => {
+                if (dia.dataset.date) {
+                    const diaData = new Date(dia.dataset.date);
+                    if (checkIn && diaData.getTime() === checkIn.getTime()) {
+                        dia.classList.add('selecionado_inicial');
+                    }
+                    if (checkOut && diaData.getTime() === checkOut.getTime()) {
+                        dia.classList.add('selecionado_final');
+                    }
+                    if (checkIn && checkOut && diaData > checkIn && diaData < checkOut) {
+                        dia.classList.add('selecionado_intervalo');
+                    }
+                }
+            });
+        }
+
+        confirmarButton.addEventListener('click', () => {
+            if (checkIn !== null && checkOut !== null) {
+                alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
+                // Aqui você pode fazer o que desejar com as variáveis checkIn e checkOut
+            } else {
+                alert('Selecione duas datas distintas.');
+            }
+        });
+
+        carregarCalendario();
+    </script>
 </body>
 </html>
