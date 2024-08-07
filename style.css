@@ -60,7 +60,7 @@ body{
     justify-content: center;
     align-items: center;
     padding: 15px 25px; 
-    background-color: rgba(255, 255, 255, 0.842); 
+    background-color: rgba(0, 0, 0, 0.842); 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgb(0, 0, 0);
     position: relative;
