@@ -4,62 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendário de Seleção</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            width: 14.28%;
-            height: 50px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        td {
-            cursor: pointer;
-        }
-        .mes_anterior {
-            color: #bbb;
-        }
-        .disponivel {
-            background-color: #fff;
-        }
-        .selecionado_inicial {
-            background-color: #90ee90; /* Verde claro para check-in */
-        }
-        .selecionado_final {
-            background-color: #add8e6; /* Azul claro para check-out */
-        }
-        .selecionado_intervalo {
-            background-color: #d3d3d3; /* Cinza claro para intervalo */
-        }
-        #info {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="estilo-calendario.css">
 </head>
 <body>
     <h1>Calendário de Seleção</h1>
 
-    <div id="calendario">
-        <button id="bnt_ant">&#60;</button>
-        <span id="mes"></span> <span id="ano"></span>
-        <button id="bnt_pro">&gt;</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
-                </tr>
-            </thead>
-            <tbody id="dias"></tbody>
-        </table>
-    </div>
-
-    <button id="confirmar">Confirmar Seleção</button>
     
-    <div id="info">
-        <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
-        <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
+    <div id="calendario">
+            <button id="bnt_ant">&#60;</button>
+            <span id="mes"></span> <span id="ano"></span>
+            <button id="bnt_pro">&gt;</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody id="dias"></tbody>
+            </table>
+        
+
+        <button id="confirmar">Confirmar Seleção</button>
+    
+        <div id="info">
+            <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
+            <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
+        </div>
+
     </div>
 
     <script>
