@@ -27,15 +27,28 @@
             </table>
         
 
-        <button id="confirmar" class="botao">Confirmar Seleção</button>
-    
+        <button id="confirmar" class="botao">Confirmar</button>
         <div id="info">
             <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
             <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
         </div>
-
     </div>
 </div>
+
+ <!-- Modal para meios de pagamento -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Meios de Pagamento</h2>
+            <p>Escolha um dos meios de pagamento abaixo:</p>
+            <ul>
+                <li>Cartão de Crédito</li>
+                <li>Boleto Bancário</li>
+                <li>PayPal</li>
+                <li>Transferência Bancária</li>
+            </ul>
+        </div>
+    </div>
 
     <script>
         let data = new Date();
@@ -48,9 +61,10 @@
         const diasElemento = document.getElementById('dias');
         const mesElemento = document.getElementById('mes');
         const anoElemento = document.getElementById('ano');
-        const confirmarButton = document.getElementById('confirmar');
+        
         const diaSelecionadoElemento = document.getElementById('diaSelecionado');
         const diaFinalSelecionadoElemento = document.getElementById('diaFinalSelecionado');
+
 
         const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
@@ -171,15 +185,31 @@
             });
         }
 
+        const confirmarButton = document.getElementById('confirmar');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeButton = document.getElementsByClassName('close')[0];
+
         confirmarButton.addEventListener('click', () => {
             if (checkIn !== null && checkOut !== null) {
                 alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
-                // Aqui você pode fazer o que desejar com as variáveis checkIn e checkOut
+                paymentModal.style.display = 'block'; // Exibe o modal de pagamento
             } else {
                 alert('Selecione duas datas distintas.');
             }
         });
 
+         // Fecha o modal quando o usuário clicar no X
+         closeButton.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+        });
+
+        // Fecha o modal quando o usuário clicar fora do conteúdo do modal
+        window.addEventListener('click', (event) => {
+            if (event.target == paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+        });
+        
         carregarCalendario();
     </script>
 </body>
