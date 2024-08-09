@@ -35,22 +35,6 @@
     </div>
 </div>
 
- <!-- Modal para meios de pagamento -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            
-            <span class="close">&times;</span>
-            <h2>Meios de Pagamento</h2>
-            <p>Escolha um dos meios de pagamento abaixo:</p>
-            <ul>
-                <li>Cartão de Crédito</li>
-                <li>Boleto Bancário</li>
-                <li>PayPal</li>
-                <li>Transferência Bancária</li>
-            </ul>
-        </div>
-    </div>
-
     <script>
         let data = new Date();
         let mesAtual = data.getMonth();
@@ -186,31 +170,20 @@
             });
         }
 
-        const confirmarButton = document.getElementById('confirmar');
-        const paymentModal = document.getElementById('paymentModal');
-        const closeButton = document.getElementsByClassName('close')[0];
+        // Adicione o código do evento de clique aqui
+    const confirmarButton = document.getElementById('confirmar');
+    confirmarButton.addEventListener('click', (event) => {
+        if (checkIn !== null && checkOut !== null) {
+            alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
+            // Se as datas forem válidas, redireciona para a página de quartos
+            window.location.href = "pagina-quartos.html";
+        } else {
+            event.preventDefault(); // Impede que o link redirecione para outra página
+            alert('Selecione duas datas distintas.');
+            // O usuário permanece na página de calendário após clicar em "OK" no alerta
+        }
+    });
 
-        confirmarButton.addEventListener('click', () => {
-            if (checkIn !== null && checkOut !== null) {
-                alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
-                paymentModal.style.display = 'block'; // Exibe o modal de pagamento
-            } else {
-                alert('Selecione duas datas distintas.');
-            }
-        });
-
-         // Fecha o modal quando o usuário clicar no X
-         closeButton.addEventListener('click', () => {
-            paymentModal.style.display = 'none';
-        });
-
-        // Fecha o modal quando o usuário clicar fora do conteúdo do modal
-        window.addEventListener('click', (event) => {
-            if (event.target == paymentModal) {
-                paymentModal.style.display = 'none';
-            }
-        });
-        
         carregarCalendario();
     </script>
 
