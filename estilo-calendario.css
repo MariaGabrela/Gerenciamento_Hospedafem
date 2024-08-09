@@ -153,6 +153,7 @@ td {
     border: none;
     margin-top: 20px;
     font-size: large;
+    text-decoration: none;
 }
 /*css do modal*/
  .modal {
