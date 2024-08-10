@@ -20,7 +20,7 @@ h1{
 }
 .conteudo .calendario header{
     position: relative;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .conteudo{
     left: 50%;
@@ -143,18 +143,29 @@ td {
     width: 500px;
 }
 
-.botao {
-    padding: 20px 30px;
+.botao{
+    margin-top: 50px;
+}
+
+.botao1{
+    padding: 20px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
-    background-color: #0056b3;
+    background-color: #b40000;
     color: white;
     border: none;
-    margin-top: 20px;
     font-size: large;
-    text-decoration: none;
+    text-decoration: none; 
+    margin-top: 70px; 
+    max-width: fit-content;
+    margin: auto;
 }
+
+.botao1:hover{
+    background-color: #ff0000;
+    }
+
 /*css do modal*/
  .modal {
             display: none;
