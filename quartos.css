@@ -1,0 +1,27 @@
+body{
+    font-family:'lato' , sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quarto {
+    display: flex;
+    gap: 20px; 
+}
+
+.quartos {
+    max-width: 300px;
+    height: auto; 
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
