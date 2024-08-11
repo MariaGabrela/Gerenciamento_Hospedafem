@@ -8,13 +8,13 @@
 <body>
 <?php
 
-if (isset($_COOKIE["numfunc"])) {
+if (isset($_COOKIE["numlogin"])) {
     $v1 = $_GET['num1'];
-    $v2 = $_COOKIE['numfunc'];
+    $v2 = $_COOKIE['numlogin'];
 
     if ($v1 != $v2) {
         // Redireciona para a página de login se os valores não corresponderem
-        header("Location: index.html");
+        header("Location:PagFuncionario.html");
         exit;
     } else {
         // Se os valores corresponderem, tenta conectar ao banco de dados
@@ -22,7 +22,7 @@ if (isset($_COOKIE["numfunc"])) {
 
         if ($conect) {
             // Se a conexão for bem-sucedida, redireciona para a página de funcionario
-            header("Location: PagFuncionario.html");
+            header("Location:PagFuncionario.html");
             mysqli_close($conect);
             exit;
         } else {
