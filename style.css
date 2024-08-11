@@ -216,7 +216,7 @@ body{
 .laranja{
     margin-top: -30px;
     background-color: rgb(14, 14, 14);
-    width: 350px;
+    width: 330px;
     box-shadow: 0 4px 8px rgb(0, 0, 0);
     display: inline-block; /* Garantir que os elementos .laranja sejam inline-block*/
     border-radius: 9px;

@@ -16,7 +16,7 @@ $result=mysqli_query($conect , $login);
 $linha = mysqli_affected_rows($conect);
 if ($linha>0){
     $num=rand(100000, 900000);
-    setcookie("numlogin",$num);
+    setcookie("numfunc",$num);
     header("Location:praguesias.php?num1='$num'");
 }
 else{
