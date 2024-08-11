@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Funcionario</title>
 </head>
 <body>
 <?php
@@ -17,7 +17,7 @@ $linha = mysqli_affected_rows($conect);
 if ($linha>0){
     $num=rand(100000, 900000);
     setcookie("numlogin",$num);
-    header("Location:praguesia.php?num1='$num'");
+    header("Location:praguesias.php?num1='$num'");
 }
 else{
     echo "</br> usuario incorreto";

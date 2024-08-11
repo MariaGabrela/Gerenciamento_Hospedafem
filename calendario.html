@@ -10,7 +10,7 @@
 <body>
     <h1>check-in e check-out:</h1>
 
-    <div class="conteudo">
+<div class="conteudo">
     <div class="calendario">
         <header>
             <button class="bnt_ant" id="bnt_ant">&#60;</button>
@@ -26,8 +26,7 @@
                 <tbody id="dias"></tbody>
             </table>
         <div class="botao">
-        <a href="pagina-quartos.html" class="botao1" id="confirmar">Continuar</a>
-        </div>
+            <a href="pagina-quartos.html" class="botao1" id="confirmar">Continuar</a>
         <div id="info">
             <p id="diaSelecionado">Primeiro dia selecionado: Nenhum</p>
             <p id="diaFinalSelecionado">Segundo dia selecionado: Nenhum</p>
@@ -42,16 +41,19 @@
         let checkIn = null;
         let checkOut = null;
         let checkInDate = null;
+        
 
         const diasElemento = document.getElementById('dias');
         const mesElemento = document.getElementById('mes');
-        const anoElemento = document.getElementById('ano');
-        
+        const anoElemento = document.getElementById('ano');      
         const diaSelecionadoElemento = document.getElementById('diaSelecionado');
         const diaFinalSelecionadoElemento = document.getElementById('diaFinalSelecionado');
-
-
         const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        const datasIndisponiveis = [
+            '2024-08-15',
+            '2024-08-22',
+            // Adicione outras datas conforme necessário
+        ];
 
         document.getElementById('bnt_ant').addEventListener('click', () => {
             mesAtual = (mesAtual - 1 + 12) % 12;
@@ -169,24 +171,41 @@
                 }
             });
         }
+        const confirmarButton = document.getElementById('confirmar');
+        confirmarButton.addEventListener('click', (event) => {
+            if (checkIn !== null && checkOut !== null) {
+                const checkInString = checkIn.toISOString().split('T')[0];
+                const checkOutString = checkOut.toISOString().split('T')[0];
+                
+                const indisponivel = datasIndisponiveis.includes(checkInString) || datasIndisponiveis.includes(checkOutString);
 
-        // Adicione o código do evento de clique aqui
-    const confirmarButton = document.getElementById('confirmar');
-    confirmarButton.addEventListener('click', (event) => {
-        if (checkIn !== null && checkOut !== null) {
-            alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
-            // Se as datas forem válidas, redireciona para a página de quartos
-            window.location.href = "pagina-quartos.html";
-        } else {
-            event.preventDefault(); // Impede que o link redirecione para outra página
-            alert('Selecione duas datas distintas.');
-            // O usuário permanece na página de calendário após clicar em "OK" no alerta
-        }
-    });
-
+                if (indisponivel) {
+                    event.preventDefault(); // Impede o redirecionamento
+                    alert('Os quartos não estão disponíveis para as datas selecionadas.Aperte "OK" para modifica-las');
+                    setTimeout(() => {
+                        location.reload(); // Recarrega a página após o alerta
+                    }, 1000); // Tempo para o alerta ser exibido
+                } else {
+                    alert(`Check-in: ${checkIn.toLocaleDateString()} e Check-out: ${checkOut.toLocaleDateString()}`);
+                    // Redireciona para a próxima página ou realiza a ação desejada
+                }
+            } else {
+                event.preventDefault(); // Impede o redirecionamento
+                alert('Selecione duas datas distintas.');
+            }
+        });
+        
         carregarCalendario();
     </script>
 
-    
+
+
+
+
+
+
+
+
+
 </body>
 </html>
