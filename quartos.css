@@ -7,7 +7,21 @@ h1{
     text-align: center;
 }
 
-.reservar-btn
+.reservar-btn{
+    font-weight: bold;
+    font-size: medium;
+    padding: 12px;
+    width: 110px;
+    border: none;
+    color: rgb(105, 63, 0);
+    border-radius: 10px;
+    background-color: orange;
+    cursor: pointer;
+}
+.reservar-btn:hover{
+    background-color: rgb(255, 180, 41);
+    color: rgb(102, 61, 0);
+}
 
 .coluna {
     display: flex;
