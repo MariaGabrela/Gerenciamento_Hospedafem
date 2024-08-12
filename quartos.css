@@ -7,23 +7,30 @@ h1{
     text-align: center;
 }
 
+h2{
+    color: rgb(252, 184, 57);
+}
+
 .reservar-btn{
     font-weight: bold;
     font-size: medium;
-    padding: 12px;
+    padding: 15px;
     width: 110px;
     border: none;
     color: rgb(105, 63, 0);
     border-radius: 10px;
     background-color: orange;
     cursor: pointer;
+    margin-left: 320px;
 }
+
 .reservar-btn:hover{
-    background-color: rgb(255, 180, 41);
-    color: rgb(102, 61, 0);
+    background-color: rgb(175, 114, 0);
+    color: rgb(255, 214, 152);
 }
 
 .coluna {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -34,9 +41,12 @@ h1{
 .quarto {
     display: flex;
     gap: 20px; 
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .quartos {
+    border-radius: 5px;
     max-width: 300px;
     height: auto; 
 }
@@ -87,10 +97,24 @@ h1{
 }
 /*barra de pesquisa*/
 #searchBar {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 20px;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 15px;
     border: 1px solid #ccc;
+}
+
+.lupa{
+    width: 30px;
+    margin-right: 15px;
+    margin-top: -16px;
+}
+
+.lupa1{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    width: 50%;
 }
