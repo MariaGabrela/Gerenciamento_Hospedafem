@@ -7,7 +7,6 @@
 </head>
 <body>
 <?php
-
 if (isset($_COOKIE["numlogin"])) {
     $v1 = $_GET['num1'];
     $v2 = $_COOKIE['numlogin'];

@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="quartos.css">
 </head>
 <body>
-    <h1>barra de pesquisa</h1>
     <h1>Acomodaçoes</h1>
+    <!-- Barra de pesquisa -->
+    <input type="text" id="searchBar" placeholder="Pesquisar quarto..." onkeyup="filterQuartos()">
     <div class="coluna">
         <div class="quarto">
             <img class="quartos" src="imagens/Domo.jpeg" alt="">
@@ -18,31 +19,49 @@
                 <p>a partir de R$100</p>
             </div>
         </div>
-        <button>reservar</button>
+        <button class="reservar-btn">reservar</button>
         <hr style="background-color: white; width: 100%; margin: 20px auto;">
     
         <div class="quarto">
             <img class="quartos" src="imagens/Churras.jpeg" alt="">
             <div class="info">
                 <h2>Churas (Bus)</h2>
-                <p>alguns detalhes que acompanham esta acomodação especial: Roupas de cama; Roupas de banho; Banheira de hidromassagem; Cozinha básica; Taças; Churrasqueira; Televisão; Soundbar Jbl Cinema; Cafeteira com cápsula; Rede de descanso; Área com vista para o mar; Deck externo com fogueira; Acompanha uma cesta de café da manhã; </p>
+                <p>Alguns detalhes que acompanham esta acomodação especial: Roupas de cama; Roupas de banho; Banheira de hidromassagem; Cozinha básica; Taças; Churrasqueira; Televisão; Soundbar Jbl Cinema; Cafeteira com cápsula; Rede de descanso; Área com vista para o mar; Deck externo com fogueira; Acompanha uma cesta de café da manhã.</p>
                 <p>a partir de R$200</p>
             </div>
         </div>
-        <button>reservar</button>
+        <button class="reservar-btn">reservar</button>
         <hr style="background-color: white; width: 100%; margin: 20px auto;">
     
         <div class="quarto">
             <img class="quartos" src="imagens/cabana.jpg" alt="">
             <div class="info">
                 <h2>Cabana</h2>
-                <p>Possui cama de casal, uma cama de solteiro, cama extra, ar-condicionado, TV, cozinha com utensílios básicos e banheiro. Na área externa possui varanda e deck com churrasqueira, tendo ampla vista para o mar. A acomodação é ideal para três pessoas, podendo comportar até quatro</p>
+                <p>Possui cama de casal, uma cama de solteiro, cama extra, ar-condicionado, TV, cozinha com utensílios básicos e banheiro. Na área externa possui varanda e deck com churrasqueira, tendo ampla vista para o mar. A acomodação é ideal para três pessoas, podendo comportar até quatro.</p>
             </div>
         </div>
-        <button>reservar</button>
+        <button class="reservar-btn">reservar</button>
         <hr style="background-color: white; width: 100%; margin: 20px auto;">
     </div>
 
+    <!-- Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Meios de Pagamento</h2>
+            <form id="paymentForm">
+                <label for="paymentMethod">Selecione o método de pagamento:</label><br>
+                <select id="paymentMethod" name="paymentMethod">
+                    <option value="cartao">Cartão de Crédito</option>
+                    <option value="boleto">Boleto Bancário</option>
+                    <option value="pix">PIX</option>
+                </select><br><br>
+                <button type="submit" id="confirmBtn">Confirmar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="modal.js"></script>
 
 
 
