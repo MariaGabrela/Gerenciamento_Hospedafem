@@ -121,7 +121,8 @@ body{
     padding-bottom: 15px;
     padding-top: 15px;
     border: none;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
 }
 .login:hover{
     background-color: rgba(233, 78, 22, 0.929);
@@ -411,6 +412,7 @@ body{
 
 
 .funcionario{
+    font-weight: bold;
     border: none;
     background-color: rgba(240, 248, 255, 0);
     font-size: 23px;
@@ -418,8 +420,12 @@ body{
 
 .reserva{
     cursor: pointer;
+    font-weight: bold;
 }
-  
+
+.reserva:hover{
+background-color: rgb(236, 236, 236);
+}
   footer {
     background-color: #333;
     padding: 20px;
