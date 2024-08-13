@@ -51,15 +51,15 @@
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Meios de Pagamento</h2>
+            <h2 class="titulo">Meios de Pagamento</h2>
             <form id="paymentForm">
-                <label for="paymentMethod">Selecione o método de pagamento:</label><br>
-                <select id="paymentMethod" name="paymentMethod">
+                <label class="met" for="paymentMethod">Selecione o método de pagamento:</label><br>
+                <select class="cartao" id="paymentMethod" name="paymentMethod">
                     <option value="cartao">Cartão de Crédito</option>
                     <option value="boleto">Boleto Bancário</option>
                     <option value="pix">PIX</option>
                 </select><br><br>
-                <button type="submit" id="confirmBtn">Confirmar</button>
+                <button type="submit" class="confirmar" id="confirmBtn">Confirmar</button>
             </form>
         </div>
     </div>
