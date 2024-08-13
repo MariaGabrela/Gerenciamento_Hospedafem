@@ -318,6 +318,8 @@ body{
     font-size: 1.25rem;
     font-weight: 700;
     color: #212121;
+    font-family:'lato' , sans-serif;
+    font-size: x-large;
 }
   
 .subtitle {
@@ -371,17 +373,20 @@ body{
 }
   
 .sign-in_btn {
-    width: 100%;
+    margin-left: 100px;
+    width: 50%;
     height: 40px;
     border: 0;
-    background: #115DFC;
+    background: #fc6f11;
     border-radius: 7px;
     color: #ffffff;
     cursor: pointer;
     margin-top: 30px;
+    font-size: medium;
+    font-weight: bold;
 }
 .sign-in_btn:hover{
-    background-color: #0c3ba2;
+    background-color: #ff933b;
 }
 
 .sign-in_ggl {
